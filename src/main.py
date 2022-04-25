@@ -25,12 +25,10 @@ def rollNWM(input: str) -> str:
     :return: the dice result(s) as string
     '''
     if isValidInput(input):
-        intValues = input.split("W")
-        numberOfDices = int(intValues[0])
-        nsided = int(intValues[1])
+        noOfDice, seperator, diceValue = input.partition("W")
         output = ""
-        for _ in range(numberOfDices):
-            diceResult = random.randint(1,nsided)
+        for _ in range(noOfDice):
+            diceResult = random.randint(1,diceValue)
             output += str(diceResult)+" "
         return output
     else:
@@ -40,10 +38,6 @@ def rollNWM(input: str) -> str:
 def help() -> str:
     #TODO "how to use the bot"
     return "help"
-
-
-def errorMsg(msg: str) -> str:
-    return f'{msg} is an invalid input. Please write #help for additional information'
 
 
 @client.event
@@ -66,8 +60,5 @@ async def on_message(message):
     elif msg == "#help":
         helpmsg = help()
         await message.channel.send(helpmsg)
-    elif msg.startswith("#"):
-        errMsg = errorMsg(msg)
-        await message.channel.send(errMsg)
 
 client.run(cnst.TOKEN)
