@@ -13,17 +13,8 @@ def isValidInput(input: str) -> bool:
     :param input: must contain W in between two numbers
     :return: True if input is valid
     '''
-    if "W" in input and input[0] != "W" and input[-1] != "W":
-        intValues = input.split("W")
-        try:
-            numberOfDice = int(intValues[0])
-            nsidedDice = int(intValues[1])
-        except:
-            print(f'Wrong input: {intValues[0]} {intValues[1]}')
-            return False
-        return True
-    else:
-        return False
+    noOfDice, seperator, diceValue = input.partition("W")
+    return (noOfDice.isdecimal() and diceValue.isdecimal())
 
 
 def rollNWM(input: str) -> str:
@@ -34,7 +25,6 @@ def rollNWM(input: str) -> str:
     :return: the dice result(s) as string
     '''
     if isValidInput(input):
-        print("valid")
         intValues = input.split("W")
         numberOfDices = int(intValues[0])
         nsided = int(intValues[1])
